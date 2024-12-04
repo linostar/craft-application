@@ -565,12 +565,6 @@ def test_run_managed_configure_pro(mocker, app, fake_project, fake_build_plan):
     # provide spec to pass type check for pro support
     mock_instance = mocker.MagicMock(spec=lxd.LXDInstance)
 
-    # TODO: these methods are currently in review, https://github.com/canonical/craft-providers/pull/664/files
-    # Remove when craft-providers with pro support in lxd is merged to main.
-    mock_instance.install_pro_client = mocker.Mock()
-    mock_instance.attach_pro_subscription = mocker.Mock()
-    mock_instance.enable_pro_service = mocker.Mock()
-
     mock_provider.instance.return_value.__enter__.return_value = mock_instance
     app.project = fake_project
     app._build_plan = fake_build_plan
@@ -608,12 +602,6 @@ def test_run_managed_skip_configure_pro(mocker, app, fake_project, fake_build_pl
     app.services.provider = mock_provider
     # provide spec to pass type check for pro support
     mock_instance = mocker.MagicMock(spec=lxd.LXDInstance)
-
-    # TODO: Remove when these mocks when methods are present in main.
-    # see TODO in test_run_managed_configure_pro for details.
-    mock_instance.install_pro_client = mocker.Mock()
-    mock_instance.attach_pro_subscription = mocker.Mock()
-    mock_instance.enable_pro_service = mocker.Mock()
 
     mock_provider.instance.return_value.__enter__.return_value = mock_instance
     app.project = fake_project
