@@ -304,9 +304,6 @@ class UbuntuProAttachedError(InvalidUbuntuProStateError):
 class InvalidUbuntuProServiceError(InvalidUbuntuProStateError):
     """Raised when the requested Ubuntu Pro service is not supported or invalid."""
 
-    # TODO: Should there be separate exceptions for services that not supported vs. invalid?
-    # if so where is the list of supported service names?
-
     def __init__(self, invalid_services: set[str]) -> None:
         invalid_services_str = "".join(invalid_services)
 
