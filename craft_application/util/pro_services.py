@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU Lesser General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Handling of Ubuntu Pro Services."""
+"""Management of Ubuntu Pro Services."""
 
 from __future__ import annotations
 
@@ -49,7 +49,6 @@ class ValidatorOptions(Flag):
     """Options for ProServices.validate method.
 
     SUPPORT: Check names in ProServices set against supported services.
-    AVAILABILITY: Check Ubuntu Pro is attached if ProServices set is not empty
     ATTACHMENT: Check Ubuntu Pro is attached or detached to match ProServices set.
     ENABLEMENT: Check enabled Ubuntu Pro enablement matches ProServices set.
     """
@@ -57,11 +56,6 @@ class ValidatorOptions(Flag):
     SUPPORT = auto()
     _ATTACHED = auto()
     _DETACHED = auto()
-    # TODO: remove AVAILABILITY if not needed. This flag is useful if we can manually control
-    # if a managed instance is pro or not. It allows us to check if the host has
-    # any pro services to support a pro build. In this case, if pro is not requested
-    # the managed instance would not be attached.
-    AVAILABILITY = _ATTACHED
     ATTACHMENT = _ATTACHED | _DETACHED
     ENABLEMENT = auto()
     DEFAULT = SUPPORT | ATTACHMENT | ENABLEMENT
@@ -83,10 +77,7 @@ class ProServices(set[str]):
         "fips-updates",
     }
 
-    # location of pro client
-    pro_executable: Path | None = next(
-        (path for path in PRO_CLIENT_PATHS if path.exists()), None
-    )
+    pro_executable: Path | None = Path("/usr/bin/pro")
 
     def __str__(self) -> str:
         """Convert to string for display to user."""
